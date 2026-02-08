@@ -2,6 +2,8 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN echo "exit 0" > /usr/sbin/policy-rc.d
+
 RUN apt update && apt install -y apache2
 
 COPY config/domini.com.conf /etc/apache2/sites-available/domini.com.conf
@@ -19,4 +21,5 @@ RUN a2ensite domini.org.conf
 RUN a2dissite 000-default.conf
 
 CMD ["apachectl", "-D", "FOREGROUND"]
+
 
