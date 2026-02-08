@@ -13,7 +13,8 @@ RUN a2ensite domini.com.conf
 RUN a2ensite domini.org.conf
 
 # Copiem els fitxers web
-COPY www/com/ /var/www/com/
-COPY www/org/ /var/www/org/
+COPY www/appave/ /var/www/appave/
+COPY www/isitechorg/ /var/www/isitechorg/
 
 CMD ["apachectl", "-D", "FOREGROUND"]
+
