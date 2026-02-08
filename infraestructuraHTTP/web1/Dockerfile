@@ -7,9 +7,9 @@ RUN echo "exit 0" > /usr/sbin/policy-rc.d
 # Instal·lar Apache
 RUN apt update && apt install -y apache2
 
-# Crear carpetes per als logs (si no existeixen)
-RUN mkdir -p /var/www/appave/logs
-RUN mkdir -p /var/www/isitechorg/logs
+# Crear carpetes per als logs
+RUN mkdir -p /var/www/com/logs
+RUN mkdir -p /var/www/org/logs
 
 # Copiar els VirtualHosts
 COPY config/domini.com.conf /etc/apache2/sites-available/domini.com.conf
@@ -20,12 +20,12 @@ RUN a2ensite domini.com.conf
 RUN a2ensite domini.org.conf
 RUN a2dissite 000-default.conf
 
-# Copiar els continguts de les webs
-COPY www/appave/ /var/www/appave/
-COPY www/isitechorg/ /var/www/isitechorg/
+# Copiar els continguts de les webs (segons la teva estructura real)
+COPY www/com/ /var/www/com/
+COPY www/org/ /var/www/org/
 
 # Donar permisos correctes
-RUN chown -R www-data:www-data /var/www/appave /var/www/isitechorg
+RUN chown -R www-data:www-data /var/www/com /var/www/org
 
 # Afegir ServerName global per evitar l’avís
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -33,5 +33,5 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Exposar el port 80
 EXPOSE 80
 
-# Arrencar Apache en primer pla (imprescindible perquè el contenidor no mori)
+# Arrencar Apache en primer pla
 CMD ["apache2ctl", "-D", "FOREGROUND"]
