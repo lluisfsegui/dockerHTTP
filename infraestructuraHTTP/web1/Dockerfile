@@ -11,12 +11,11 @@ RUN mkdir -p /var/www/appave/logs \
     && mkdir -p /var/www/isitechorg/logs \
     && mkdir -p /srv/www/appave/imatges
 
-# Copiem els fitxers web
 COPY www/appave/ /var/www/appave/
 COPY www/isitechorg/ /var/www/isitechorg/
 
-# Activem els VirtualHosts
 RUN a2ensite domini.com.conf
 RUN a2ensite domini.org.conf
+RUN a2dissite 000-default.conf
 
 CMD ["apachectl", "-D", "FOREGROUND"]
